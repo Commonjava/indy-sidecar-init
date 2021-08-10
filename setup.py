@@ -4,7 +4,7 @@ import sys
 setup(
     zip_safe=True,
     use_2to3=False,
-    name='sidecar-init',
+    name='sidecarinit',
     version='0.0.1',
     long_description='sidecar-init container for download archive and decompress',
     classifiers=[
@@ -19,11 +19,12 @@ setup(
     packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
     install_requires=[
       "requests",
-      "zipfile"
+      "ruamel.yaml",
+      "click"
     ],
     entry_points={
         'console_scripts': [
-            'run-sidecar-init = sidecar-init:run'
+            'run-sidecar-init = sidecarinit:run'
         ],
     }
 )

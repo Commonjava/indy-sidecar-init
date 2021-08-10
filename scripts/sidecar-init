@@ -1,0 +1,5 @@
+#!/bin/bash
+
+source /etc/profile
+
+exec /usr/share/indy-sidedcar-init/venv/bin/run-sidecar-init "$@"

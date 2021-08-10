@@ -1,8 +1,10 @@
 FROM registry.access.redhat.com/ubi8/python-36
 
-RUN mkdir -p /usr/share/indy-sidedcar-init/sidecar-init
+USER root
 
-ADD sidecarinit /usr/share/indy-sidedcar-init/sidecar-init
+RUN mkdir -p /usr/share/indy-sidedcar-init/sidecarinit
+
+ADD sidecarinit /usr/share/indy-sidedcar-init/sidecarinit
 ADD setup.py /usr/share/indy-sidedcar-init
 ADD scripts/* /usr/local/bin/
 
