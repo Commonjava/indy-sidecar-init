@@ -1,16 +1,17 @@
 from ruamel.yaml import YAML
 import os
 
-ENV_INDY_URL = 'indy-url'
-ENV_PROXY_PORT = 'proxy-port'
+ENV_ARCHIVE_API = 'archive-api'
+ENV_LOCAL_REPOSITORY = 'local-repository'
 
 DEFAULT_PROXY_PORT = 8081
+DEFAULT_LOCAL_REPOSITORY = '/preSeedRepo'
 
 
 class Environment:
     def __init__(self, env_spec):
-        self.indy_url = env_spec.get(ENV_INDY_URL)
-        self.proxy_port = env_spec.get(ENV_PROXY_PORT) or DEFAULT_PROXY_PORT
+        self.archive_api = env_spec.get('sidecar').get(ENV_ARCHIVE_API)
+        self.local_repository = env_spec.get('sidecar').get(ENV_LOCAL_REPOSITORY).replace('${user.home}',os.environ.get('HOME')) or DEFAULT_LOCAL_REPOSITORY
 
 def read_config(env_yml):
     """ Read the suite configuration that this worker should run, from a config.yml file 
