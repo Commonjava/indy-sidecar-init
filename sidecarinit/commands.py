@@ -1,7 +1,5 @@
 import click
 import os
-import sys
-from time import sleep
 from pathlib import Path
 import sidecarinit.config as config
 import sidecarinit.download as download

@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: "sidecar"
+spec:
+  initcontainers:
+  - name : sidecar-init
+    image: quay.io/kaine/indy-sidecar-init:latest
+    volumeMounts:
+    - mountPath: /deployments/config/application.yaml
+      readOnly: true
+      name: sidecar-config
+      subPath: application.yaml
+    - mountPath : /deployments/preSeedRepo
+      name: archive-volume
+    env:
+    - name: HOME
+      value: /deployments
+  - name: sidecar
+    image: quay.io/kaine/indy-sidecar:latest
+    imagePullPolicy: Always
+    volumeMounts:
+    - mountPath: /deployments/config/proxy.yaml
+      readOnly: true
+      name: sidecar-config
+      subPath: proxy.yaml
+    - mountPath: /deployments/config/application.yaml
+      readOnly: true
+      name: sidecar-config
+      subPath: application.yaml
+    - mountPath : /deployments/preSeedRepo
+      name: archive-volume
+    env:
+      - name: JAVA_OPTS
+        value: '-Xms3G -Xmx3G -Xss256k'
+      - name: HOME
+        value: /deployments
+    ports:
+      - containerPort: 8080
+        protocol: TCP
+  - name: jnlp
+    image: quay.io/factory2/jenkins-agent:maven-36-rhel7-latest
+    imagePullPolicy: Always
+    tty: true
+    env:
+    - name: HOME
+      value: /home/jenkins-11-openjdk
+    volumeMounts:
+    - mountPath: /home/jenkins-11-openjdk/.m2/settings.xml
+      subPath: settings.xml
+      name: sidecar-config
+    workingDir: /home/jenkins-11-openjdk
+  volumes:
+  - name: sidecar-config
+    configMap:
+      defaultMode: 420
+      name: sidecar-jenkinsci-config
+  - name: archive-volume
+    emptyDir: {}

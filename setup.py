@@ -18,7 +18,6 @@ setup(
     license='APLv2+',
     packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
     install_requires=[
-      "requests",
       "ruamel.yaml",
       "click"
     ],
