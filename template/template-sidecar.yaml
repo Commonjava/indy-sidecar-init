@@ -4,7 +4,7 @@ metadata:
   labels:
     app: "sidecar"
 spec:
-  initcontainers:
+  initContainers:
   - name : sidecar-init
     image: quay.io/kaine/indy-sidecar-init:latest
     volumeMounts:
@@ -17,6 +17,9 @@ spec:
     env:
     - name: HOME
       value: /deployments
+    command:
+      - "sidecar-init"
+  containers:
   - name: sidecar
     image: quay.io/kaine/indy-sidecar:latest
     imagePullPolicy: Always
@@ -39,6 +42,10 @@ spec:
     ports:
       - containerPort: 8080
         protocol: TCP
+    resources:
+      limits:
+        cpu: "1"
+        memory: "2Gi"
   - name: jnlp
     image: quay.io/factory2/jenkins-agent:maven-36-rhel7-latest
     imagePullPolicy: Always
@@ -51,6 +58,10 @@ spec:
       subPath: settings.xml
       name: sidecar-config
     workingDir: /home/jenkins-11-openjdk
+    resources:
+      limits:
+        cpu: "2"
+        memory: "4Gi"
   volumes:
   - name: sidecar-config
     configMap:
