@@ -1,12 +1,11 @@
 from setuptools import setup, find_packages
-import sys
 
 setup(
     zip_safe=True,
     use_2to3=False,
     name='sidecarinit',
     version='0.0.1',
-    long_description='sidecar-init container for download archive and decompress',
+    long_description='sidecar-init container for download archive and unzip',
     classifiers=[
       "Development Status :: 3 - Alpha",
       "Intended Audience :: Developers",
