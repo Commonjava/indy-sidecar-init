@@ -7,7 +7,7 @@ RUN mkdir -p /usr/share/indy-sidecar-init/sidecarinit
 ADD sidecarinit /usr/share/indy-sidecar-init/sidecarinit
 ADD setup.py /usr/share/indy-sidecar-init
 ADD scripts/* /usr/local/bin/
-ADD application.yml /deployments/config/application.yml
+ADD application.yaml /deployments/config/application.yaml
 
 RUN chmod +x /usr/local/bin/*
 
