@@ -10,8 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 @click.command()
-@click.argument('env_yml', required=False,
-                default='/deployments/config/application.yaml')
+@click.argument('env_yml', required=False, default='/deployments/config/application.yaml')
 # help='Target environment, Same as sidecar application.yml'
 def run(env_yml):
 
