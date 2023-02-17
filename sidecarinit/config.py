@@ -5,7 +5,7 @@ ENV_ARCHIVE_API = 'archive-api'
 ENV_LOCAL_REPOSITORY = 'local-repository'
 
 DEFAULT_PROXY_PORT = 8081
-DEFAULT_LOCAL_REPOSITORY = '/preSeedRepo'
+DEFAULT_LOCAL_REPOSITORY = os.environ.get('HOME')+'/preSeedRepo'
 
 
 class Environment:

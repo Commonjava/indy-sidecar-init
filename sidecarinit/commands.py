@@ -16,14 +16,14 @@ def run(env_yml):
 
     suite = config.read_config(env_yml)
 
-    archive_name = os.environ.get('BUILD_ID') + '.zip'
+    archive_name = os.environ.get('build.config.id')
 
     logger.info('Downloading from : %s to %s .', suite.archive_api, suite.local_repository)
     Path(suite.local_repository).mkdir(parents=True, exist_ok=True)
     Path(os.path.join(suite.local_repository, archive_name)).touch(exist_ok=True)
 
-    if archive_name != '.zip':
-        download.download_archive(suite.archive_api + archive_name,
+    if archive_name:
+        download.download_archive(suite.archive_api +  "/" + archive_name,
                                   suite.local_repository)
     else:
         logger.info('BUILD_ID does not exist, exit now.')
