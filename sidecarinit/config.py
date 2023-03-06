@@ -5,13 +5,13 @@ ENV_ARCHIVE_API = 'archive-api'
 ENV_LOCAL_REPOSITORY = 'local-repository'
 
 DEFAULT_PROXY_PORT = 8081
-DEFAULT_LOCAL_REPOSITORY = os.environ.get('HOME')+'/preSeedRepo'
+DEFAULT_LOCAL_REPOSITORY = os.path.expanduser('~/preSeedRepo')
 
 
 class Environment:
-    def __init__(self, env_spec):
-        self.archive_api = env_spec.get('sidecar').get(ENV_ARCHIVE_API)
-        self.local_repository = env_spec.get('sidecar').get(ENV_LOCAL_REPOSITORY).replace('${user.home}', os.environ.get('HOME')) or DEFAULT_LOCAL_REPOSITORY
+    def __init__(self, env_config_dict):
+        self.archive_api = env_config_dict.get('sidecar').get(ENV_ARCHIVE_API)
+        self.local_repository = env_config_dict.get('sidecar').get(ENV_LOCAL_REPOSITORY).replace('${user.home}', os.path.expanduser('~')) or DEFAULT_LOCAL_REPOSITORY
 
 
 def read_config(env_yml):
@@ -26,16 +26,16 @@ def read_config(env_yml):
     """
     errors = []
 
-    env_spec = {}
+    env_config_dict = {}
     if env_yml is None:
         errors.append(f"Missing test environment config file")
-    elif os.path.exists(env_yml):
+    elif not os.path.exists(env_yml):
+        errors.append(f"Missing test environment config file")
+    else:
         with open(env_yml) as f:
             yaml = YAML(typ='safe')
-            env_spec = yaml.load(f)
-    else:
-        errors.append(f"Missing test environment config file")
+            env_config_dict = yaml.load(f)
 
-    env = Environment(env_spec)
+    env = Environment(env_config_dict)
 
     return env
