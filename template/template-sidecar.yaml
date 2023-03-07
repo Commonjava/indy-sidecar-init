@@ -6,8 +6,9 @@ metadata:
 spec:
   initContainers:
   - name : sidecar-init
-    image: quay.io/kaine/indy-sidecar-init:latest
+    image: quay.io/factory2/indy-sidecar-init:latest
     volumeMounts:
+    # Same as the sidecar container has
     - mountPath: /deployments/config/application.yaml
       readOnly: true
       name: sidecar-config
@@ -21,13 +22,14 @@ spec:
       - "sidecar-init"
   containers:
   - name: sidecar
-    image: quay.io/kaine/indy-sidecar:latest
+    image: quay.io/factory2/indy-sidecar:latest
     imagePullPolicy: Always
     volumeMounts:
     - mountPath: /deployments/config/proxy.yaml
       readOnly: true
       name: sidecar-config
       subPath: proxy.yaml
+    # Same as the sidecar-init container has
     - mountPath: /deployments/config/application.yaml
       readOnly: true
       name: sidecar-config
@@ -46,7 +48,7 @@ spec:
       limits:
         cpu: "1"
         memory: "2Gi"
-  - name: jnlp
+  - name: builder
     image: quay.io/factory2/jenkins-agent:maven-36-rhel7-latest
     imagePullPolicy: Always
     tty: true

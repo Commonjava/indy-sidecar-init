@@ -1,0 +1,22 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: indy-sidecar-init-build
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: DockerImage
+      name: 'quay.io/example/indy-sidecar-init:latest'
+    pushSecret:
+      name: example
+  strategy:
+    type: Docker
+    dockerStrategy:
+      noCache: true
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/Commonjava/indy-sidecar-init.git'
+      ref: master
+  runPolicy: Serial
