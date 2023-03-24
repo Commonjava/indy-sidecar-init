@@ -4,7 +4,7 @@ import os
 from zipfile import ZipFile
 
 def download_archive(url, repository):
-    build_id = os.environ.get('build.config.id')
+    build_id = os.environ.get('BUILD_CONFIG_ID')
     archive_path = f"/{build_id}.zip"
 
     with urllib.request.urlopen(url) as response:
