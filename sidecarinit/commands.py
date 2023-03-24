@@ -17,8 +17,8 @@ def run(env_yml):
     # Calling read_config() function from the config module to parse a YAML file and load configuration into a named tuple suite.
     suite = config.read_config(env_yml)
 
-    # Assigning the archive_name variable with the build.config.id environment variable if exists.
-    archive_name = os.environ.get('build.config.id')
+    # Assigning the archive_name variable with the BUILD_CONFIG_ID environment variable if exists.
+    archive_name = os.environ.get('BUILD_CONFIG_ID')
 
     # Downloading from suite.archive_api to suite.local_repository.
     logger.info('Downloading from : %s to %s .', suite.archive_api, suite.local_repository)
@@ -28,6 +28,6 @@ def run(env_yml):
         download.download_archive(suite.archive_api +  "/" + archive_name,
                                   suite.local_repository)
     else:
-        logger.info('build.config.id does not exist, exit now.')
+        logger.info('BUILD_CONFIG_ID does not exist, exit now.')
 
     sys.exit(0)
