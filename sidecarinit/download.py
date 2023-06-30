@@ -11,7 +11,7 @@ def download_archive(url, repository):
       print(f"Trying to download archive from url {url}\n")
       with urllib.request.urlopen(url) as response:
           with open(repository + archive_path, 'wb') as out_file:
-              out_file.write(response.read())
+              shutil.copyfileobj(response, out_file)
       downloaded = True
     except urllib.error.HTTPError as e:
       downloaded = False
