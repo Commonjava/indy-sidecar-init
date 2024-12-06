@@ -25,8 +25,7 @@ def run(env_yml):
     Path(suite.local_repository).mkdir(parents=True, exist_ok=True)
 
     if archive_name:
-        download.download_archive(suite.archive_api +  "/" + archive_name,
-                                  suite.local_repository)
+        download.download_archive(suite.archive_api, suite.local_repository)
     else:
         logger.info('BUILD_CONFIG_ID does not exist, exit now.')
 
